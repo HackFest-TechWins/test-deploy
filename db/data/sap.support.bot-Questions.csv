@@ -1,0 +1,6 @@
+ID,answer_ID,question,questionVector,createdAt,createdBy,modifiedAt,modifiedBy
+25988300-0caa-499f-b422-7ba1fa411f4a,17114773-021f-44e1-951f-97bb2d0af298,question-25988300,questionVector-25988300,2010-11-25T19:00:00.000Z,createdBy.fh0p8@example.com,2014-01-09T19:00:00.000Z,modifiedBy.fh0p8@example.org
+25988301-6926-479f-a0df-c9a7cef2e7ea,17114773-021f-44e1-951f-97bb2d0af298,question-25988301,questionVector-25988301,2001-07-11T19:00:00.000Z,createdBy.fh0p9@example.net,2021-04-28T19:00:00.000Z,modifiedBy.fh0p9@example.com
+25988302-dded-41ba-bd8f-8642498ed001,17114773-021f-44e1-951f-97bb2d0af298,question-25988302,questionVector-25988302,2015-02-15T19:00:00.000Z,createdBy.fh0pa@example.org,2007-05-10T19:00:00.000Z,modifiedBy.fh0pa@example.com
+25988303-4c8e-4dee-bb69-d8ebb3e7c855,17114773-021f-44e1-951f-97bb2d0af298,question-25988303,questionVector-25988303,2014-07-26T19:00:00.000Z,createdBy.fh0pb@example.com,2011-03-30T19:00:00.000Z,modifiedBy.fh0pb@example.org
+25988304-fb19-4a60-a6f2-73c064bbc020,17114773-021f-44e1-951f-97bb2d0af298,question-25988304,questionVector-25988304,2008-10-20T19:00:00.000Z,createdBy.fh0pc@example.org,2020-11-03T19:00:00.000Z,modifiedBy.fh0pc@example.org
