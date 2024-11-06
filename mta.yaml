@@ -4,6 +4,7 @@ version: 1.0.0
 description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
+  deploy_mode: html5-repo
 build-parameters:
   before-all:
     - builder: custom
@@ -27,6 +28,7 @@ modules:
     requires:
       - name: sap-support-app-db
       - name: sap-support-app-auth
+      - name: sap-support-app-destination
 
   - name: sap-support-app-db-deployer
     type: hdb
@@ -51,6 +53,34 @@ modules:
           url: ~{srv-url}
           forwardAuthToken: true
       - name: sap-support-app-auth
+      - name: sap-support-app-destination
+      - name: sap-support-app-html5-runtime
+
+  - name: sap-support-app-app-deployer
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: sap-support-app-html5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: app/
+      requires:
+        - name: sapsupportappquestions
+          artifacts:
+            - questions.zip
+          target-path: app/
+
+  - name: sapsupportappquestions
+    type: html5
+    path: app/questions
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build
+      supported-platforms: []
 
 resources:
   - name: sap-support-app-db
@@ -67,3 +97,39 @@ resources:
       config:
         xsappname: sap-support-app-${org}-${space}
         tenant-mode: dedicated
+  - name: sap-support-app-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            existing_destinations_policy: update
+            destinations:
+              - Name: sap-support-app-srv-api
+                URL: ~{srv-api/srv-url}
+                Authentication: NoAuthentication
+                Type: HTTP
+                ProxyType: Internet
+                HTML5.ForwardAuthToken: true
+                HTML5.DynamicDestination: true
+              - Name: ui5
+                URL: https://ui5.sap.com
+                Authentication: NoAuthentication
+                Type: HTTP
+                ProxyType: Internet
+    requires:
+      - name: srv-api  
+
+  - name: sap-support-app-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: sap-support-app-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
